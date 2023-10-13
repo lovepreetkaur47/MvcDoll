@@ -85,7 +85,7 @@ namespace MvcDoll.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Type,LaunchDate,Color,Price")] Doll doll)
+        public async Task<IActionResult> Create([Bind("Id,Name,Type,LaunchDate,Color,Price,Rating")] Doll doll)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace MvcDoll.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Type,LaunchDate,Color,Price")] Doll doll)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,LaunchDate,Color,Price,Rating")] Doll doll)
         {
             if (id != doll.Id)
             {
