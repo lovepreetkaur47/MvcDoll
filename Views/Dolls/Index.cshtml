@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcDoll.Models.Doll>
+﻿@model MvcDoll.Models.DollColorViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,45 +9,56 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Dolls" asp-action="Index" method="get" />
+<p>
+    <select asp-for="DollColor" asp-items="Model.Color">
+        <option value="">All</option>
+    </select>
+    Type: <input type="text" name="SearchString" />
+    <input type="submit" value="Filter" />
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Dolls[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LaunchDate)
+                @Html.DisplayNameFor(model => model.Dolls[0].LaunchDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Color)
+                @Html.DisplayNameFor(model => model.Dolls[0].Color)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Dolls[0].Price)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LaunchDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Dolls)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LaunchDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

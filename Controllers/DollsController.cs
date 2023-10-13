@@ -19,10 +19,41 @@ namespace MvcDoll.Controllers
             _context = context;
         }
 
+
         // GET: Dolls
-        public async Task<IActionResult> Index()
+       /* [HttpPost]
+        public string Index(string searchString, bool notUsed)
         {
-            return View(await _context.Doll.ToListAsync());
+            return "From [HttpPost]Index: filter on " + searchString;
+        }*/
+        // GET: Movies
+        public async Task<IActionResult> Index(string dollcolor, string searchString)
+        {
+            // Use LINQ to get list of genres.
+            IQueryable<string> colorQuery = from m in _context.Doll
+                                            orderby m.Color
+                                            select m.Color;
+
+            var dolls = from m in _context.Doll
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                dolls = dolls.Where(s => s.Type.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(dollcolor))
+            {
+                dolls = dolls.Where(x => x.Color == dollcolor);
+            }
+
+            var dollColorVM = new DollColorViewModel
+            {
+                Color = new SelectList(await colorQuery.Distinct().ToListAsync()),
+                Dolls = await dolls.ToListAsync()
+            };
+
+            return View(dollColorVM);
         }
 
         // GET: Dolls/Details/5
